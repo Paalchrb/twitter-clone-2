@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-const LandingPage = () => {
+const Profile = () => {
   return (
     <Fragment>
       <h1>Velkommen til Kvitter!</h1>
@@ -8,4 +8,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Profile;
