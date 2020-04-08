@@ -1,40 +1,32 @@
-import React, { Fragment, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Media from 'react-bootstrap/Media';
+import React, { Fragment, useEffect, useState } from 'react';
+import { getAllKvitter } from '../../services/kvitter';
+import Kvitter from './Kvitter';
 
 const Tweets = () => {
-  useEffect(() => {
+  const [state, setState] = useState({
+    kvitter: [],
+    error: null,
+    loading: true
+  });
 
-  })
+  useEffect(() => {
+    (async () => {
+      const kvitter = await getAllKvitter();
+      setState(state => ({
+        ...state,
+        error: kvitter.error,
+        kvitter: kvitter.data,
+        loading: false
+      }));
+    })();
+  }, []);
 
   return (
     <Fragment>
       <h2>Kvitter feed</h2>
       <h4>Se det ferskeste kvitter her...</h4>
       <div className='kvitter-container'>
-        <Container>
-          <Row>
-            <Col sm={12}>
-              <Media>
-                <img
-                  width={64}
-                  height={64}
-                  className="mr-3"
-                  src="holder.js/64x64"
-                  alt="Generic placeholder"
-                />
-                <Media.Body>
-                  <h5>Media object</h5>
-                  <p>
-                    Tweet text commin here. Tjohoo
-                  </p>
-                </Media.Body>
-              </Media>
-            </Col>
-          </Row>
-        </Container>
+        <Kvitter data={state.kvitter} />
       </div>
     </Fragment>
   );
